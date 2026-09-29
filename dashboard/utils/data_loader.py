@@ -37,7 +37,7 @@ PURPOSE_PATTERNS = {
 
 
 def _csv_candidates():
-    return [p for p in DATA_SEARCH_ROOT.rglob("*.csv") if ".venv" not in p.parts and "dashboard" not in p.parts]
+    return [p for p in DATA_SEARCH_ROOT.rglob("*.csv") if ".venv" not in p.parts]
 
 
 def _find_file(patterns):

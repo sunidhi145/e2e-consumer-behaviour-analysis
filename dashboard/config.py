@@ -3,7 +3,7 @@ from pathlib import Path
 APP_TITLE = "BankIQ Customer Intelligence"
 BASE_DIR = Path(__file__).resolve().parent
 PROJECT_ROOT = BASE_DIR.parent
-DATA_SEARCH_ROOT = PROJECT_ROOT
+DATA_SEARCH_ROOT = BASE_DIR / "data"
 
 SEGMENT_COLORS = {
     "VIP_Wealth_Builders": "#2dd4bf",

@@ -10,18 +10,19 @@ from utils.data_loader import load_dashboard_data
 logging.basicConfig(level=logging.INFO, format="%(levelname)s:%(name)s:%(message)s")
 LOGGER = logging.getLogger("bankiq")
 
-app = dash.Dash(
+dash_app = dash.Dash(
     __name__,
     use_pages=True,
     suppress_callback_exceptions=True,
     external_stylesheets=[dbc.themes.BOOTSTRAP],
     title="BankIQ Customer Intelligence",
 )
-server = app.server
-app.layout = app_layout
+server = dash_app.server
+app = server
+dash_app.layout = app_layout
 
 
-@app.callback(Output("data-health-pill", "children"), Input("url", "pathname"))
+@dash_app.callback(Output("data-health-pill", "children"), Input("url", "pathname"))
 def data_health(_):
     try:
         data = load_dashboard_data()
@@ -33,4 +34,4 @@ def data_health(_):
 
 
 if __name__ == "__main__":
-    app.run(debug=False, host="127.0.0.1", port=8050)
+    dash_app.run(debug=False, host="127.0.0.1", port=8050)
