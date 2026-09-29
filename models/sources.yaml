@@ -1,0 +1,13 @@
+version: 2
+
+sources:
+  - name: bronze
+    database: ML_PROJ
+    schema: BRONZE
+
+    tables:
+      - name: customers
+      - name: accounts
+      - name: account_balances
+      - name: products
+      - name: transactions
