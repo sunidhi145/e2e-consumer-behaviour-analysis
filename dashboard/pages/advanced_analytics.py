@@ -1,7 +1,8 @@
 import dash
 from dash import Input, Output, callback, dcc, html
 
-from components.charts import cluster_bubble, feature_distribution, parallel_coordinates, pca_3d, profile_heatmap, radar_for_customer
+from components.charts import cluster_bubble, feature_distribution, parallel_coordinates, profile_heatmap, radar_for_customer
+from components.pca_viewer import pca_viewer
 from components.loaders import staged_loader
 from utils.analytics import top_features
 from utils.data_loader import load_dashboard_data
@@ -121,8 +122,8 @@ def render_advanced(tab, cluster_filter, feature, chart_type):
     return html.Div(
         [
             html.H2("3D PCA Cluster Space"),
-            html.P("Rotate, zoom, pan, hover, and reset camera using the Plotly toolbar. Centroids are shown with X markers.", className="muted"),
-            dcc.Graph(figure=pca_3d(data["pca"], data["id_col"], data["cluster_col"], data["segment_col"], cluster_filter), config={"displaylogo": False, "scrollZoom": True}),
+            html.P("Drag to rotate, scroll to zoom, and hover for customer details. Use Reset view to restore the camera. Centroids are shown with X markers.", className="muted"),
+            pca_viewer(data["pca"], data["id_col"], data["cluster_col"], data["segment_col"], cluster_filter),
         ],
         className="glass-panel analytics-3d",
     )
