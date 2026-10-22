@@ -94,8 +94,9 @@ button:focus-visible, a:focus-visible, input:focus-visible { outline: 2px solid 
 .two-col { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
 .single-col { display: grid; gap: 16px; }
 
-.search-strip { display: flex; align-items: end; gap: 14px; flex-wrap: wrap; }
+.search-strip { position: relative; z-index: 2; display: flex; align-items: end; gap: 14px; flex-wrap: wrap; }
 .input-wrap { min-width: min(100%, 200px); flex: 1; }
+.search-strip .input-wrap:focus-within { position: relative; z-index: 1; }
 label { display: block; margin-bottom: 8px; color: #cbd5e1; }
 .dark-dropdown .Select-control, .dark-dropdown .Select-menu-outer, .dark-dropdown .Select-value, .dark-dropdown .Select-input { background: #0f172a !important; color: white !important; border-color: var(--border) !important; }
 .primary-button, .secondary-button, .feature-card, .cluster-card {
