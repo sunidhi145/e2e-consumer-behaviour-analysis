@@ -1,3 +1,5 @@
+from textwrap import wrap
+
 import numpy as np
 import pandas as pd
 import plotly.express as px
@@ -56,6 +58,7 @@ def pca_2d(pca_data, id_col, cluster_col, segment_col):
         points,
         x="PC1",
         y="PC2",
+        render_mode="svg",
         color=segment_col,
         color_discrete_map=SEGMENT_COLORS,
         custom_data=[id_col, cluster_col, segment_col],
@@ -167,8 +170,36 @@ def parallel_coordinates(profiles, cluster_col, segment_col, features):
     data = profiles[[cluster_col, segment_col] + use_features].copy()
     for col in use_features:
         data[col] = pd.to_numeric(data[col], errors="coerce").fillna(0)
-    fig = px.parallel_coordinates(data, dimensions=use_features, color=cluster_col, labels={f: humanize_column(f) for f in use_features})
-    return apply_layout(fig, 520)
+    # Plotly's Parcoords trace requires WebGL. Draw the same per-feature
+    # min/max projection with SVG scatter lines so every browser can show it.
+    values = data[use_features]
+    spans = values.max() - values.min()
+    scaled = ((values - values.min()) / spans.replace(0, np.nan)).fillna(0.5)
+    fig = go.Figure()
+    for index, row in data.iterrows():
+        segment = str(row[segment_col])
+        color = SEGMENT_COLORS.get(segment, "#94a3b8")
+        fig.add_trace(go.Scatter(
+            x=list(range(len(use_features))),
+            y=scaled.loc[index].tolist(),
+            mode="lines+markers",
+            name=f"C{row[cluster_col]} {segment.replace('_', ' ')}",
+            line={"color": color, "width": 2},
+            marker={"color": color, "size": 6},
+            text=[humanize_column(f) for f in use_features],
+            customdata=[[str(row[cluster_col]), segment.replace("_", " "), float(row[f])] for f in use_features],
+            hovertemplate="%{text}<br>Cluster %{customdata[0]} · %{customdata[1]}<br>Value: %{customdata[2]:.3g}<br>Relative position: %{y:.2f}<extra></extra>",
+        ))
+    for axis in range(len(use_features)):
+        fig.add_shape(type="line", x0=axis, x1=axis, y0=0, y1=1, line={"color": "rgba(148,163,184,.25)", "width": 1}, layer="below")
+    apply_layout(fig, 500)
+    fig.update_layout(
+        xaxis={"tickmode": "array", "tickvals": list(range(len(use_features))), "ticktext": ["<br>".join(wrap(humanize_column(f), 14)) for f in use_features], "tickangle": -35, "tickfont": {"size": 10}, "showgrid": False, "zeroline": False},
+        yaxis={"title": "Relative position (min → max)", "range": [-0.05, 1.05], "tickvals": [0, 0.5, 1], "zeroline": False},
+        legend={"orientation": "h", "yanchor": "top", "y": -0.32, "x": 0, "font": {"size": 10}},
+        margin={"l": 55, "r": 15, "t": 24, "b": 160},
+    )
+    return fig
 
 
 def cluster_bubble(profiles, features, cluster_col, segment_col):
