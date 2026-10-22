@@ -3,7 +3,7 @@ from dash import Input, Output, State, callback, dcc, html
 
 from components.business_panels import segment_business_panel
 from components.cards import cluster_card, feature_card, segment_badge
-from components.loaders import empty_state, skeleton_cards
+from components.loaders import empty_state
 from components.tables import customer_grid
 from utils.analytics import top_features
 from utils.data_loader import load_dashboard_data
@@ -41,7 +41,7 @@ def layout():
                 className="cluster-card-grid",
             ),
             html.Div(id="cluster-selected-label", className="selected-label"),
-            html.Div(id="cluster-empty", children=[empty_state("Select a cluster to view insights"), skeleton_cards(3)]),
+            html.Div(id="cluster-empty", children=empty_state("Select a cluster to view insights")),
             html.Div(id="cluster-results", className="hidden"),
             dcc.Download(id="cluster-download"),
         ],
@@ -110,7 +110,8 @@ def render_cluster(cluster):
                     ],
                 ),
                 html.Div(id="cluster-tab-content", className="tab-content-region"),
-            ]
+            ],
+            className="results-stack",
         ),
         "",
     )

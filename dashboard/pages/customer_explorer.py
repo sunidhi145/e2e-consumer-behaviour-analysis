@@ -5,7 +5,7 @@ from dash import Input, Output, State, callback, dcc, html
 from components.business_panels import segment_business_panel
 from components.cards import feature_card, segment_badge
 from components.charts import feature_distribution, radar_for_customer
-from components.loaders import empty_state, skeleton_cards, staged_loader
+from components.loaders import empty_state, staged_loader
 from utils.analytics import nearest_customers, percentile, top_features
 from utils.data_loader import load_dashboard_data
 from utils.formatting import display_value, humanize_column
@@ -47,7 +47,7 @@ def layout():
             ),
             html.Div(id="customer-warning", className="warning"),
             staged_loader("customer-staged-loader", MESSAGES),
-            html.Div(id="customer-empty", children=[empty_state("Select a customer and click Search to begin"), skeleton_cards(3)]),
+            html.Div(id="customer-empty", children=empty_state("Select a customer and click Search to begin")),
             html.Div(id="customer-results", className="hidden"),
             dcc.Download(id="customer-download"),
             html.Div(id="metric-modal", className="modal-host"),
@@ -143,7 +143,8 @@ def render_customer(customer_id):
                     ],
                 ),
                 html.Div(id="customer-tab-content", className="tab-content-region"),
-            ]
+            ],
+            className="results-stack",
         ),
         "",
     )

@@ -122,7 +122,7 @@ def render_advanced(tab, cluster_filter, feature, chart_type):
     return html.Div(
         [
             html.H2("3D PCA Cluster Space"),
-            html.P("Drag to rotate, scroll to zoom, and hover for customer details. Use Reset view to restore the camera. Centroids are shown with X markers.", className="muted"),
+            html.P("Explore PC1, PC2, and PC3. Drag to rotate, scroll to zoom, and hover for details. × marks each centroid.", className="muted"),
             pca_viewer(data["pca"], data["id_col"], data["cluster_col"], data["segment_col"], cluster_filter),
         ],
         className="glass-panel analytics-3d",

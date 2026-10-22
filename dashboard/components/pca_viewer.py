@@ -37,5 +37,5 @@ def pca_viewer(pca_data, id_col, cluster_col, segment_col, cluster_filter="All")
         title="Interactive 3D PCA customer clusters",
         srcDoc=template.replace("__PCA_DATA__", encoded),
         sandbox="allow-scripts",
-        style={"width": "100%", "height": "680px", "border": "0", "borderRadius": "12px"},
+        className="pca-viewer",
     )

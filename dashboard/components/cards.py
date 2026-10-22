@@ -8,7 +8,7 @@ def kpi_card(label, value, accent="#a855f7", detail=None):
     return html.Div(
         [
             html.Div(label, className="kpi-label"),
-            html.Div(display_value(value), className="kpi-value count-up"),
+            html.Div(display_value(value), className="kpi-value count-up" + (" kpi-value-text" if isinstance(value, str) and " " in value else "")),
             html.Div(detail or "", className="kpi-detail"),
         ],
         className="kpi-card card-fade",
@@ -30,7 +30,7 @@ def feature_card(feature, value, card_id=None):
 
 
 def segment_badge(segment):
-    return html.Span(str(segment), className="segment-badge", style={"--segment": SEGMENT_COLORS.get(str(segment), "#94a3b8")})
+    return html.Span(str(segment).replace("_", " "), className="segment-badge", style={"--segment": SEGMENT_COLORS.get(str(segment), "#94a3b8")})
 
 
 def cluster_card(cluster, segment, count, pct, selected=False):

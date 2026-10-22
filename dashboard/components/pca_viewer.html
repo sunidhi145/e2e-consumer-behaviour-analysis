@@ -3,15 +3,15 @@
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <style>
-*{box-sizing:border-box}body{margin:0;background:#0c1220;color:#e5e7eb;font:13px 'Segoe UI',sans-serif}
+*{box-sizing:border-box}html,body{height:100%}body{margin:0;display:flex;flex-direction:column;background:#0c1220;color:#e5e7eb;font:12px 'Segoe UI',sans-serif}
 .toolbar{display:flex;align-items:center;gap:8px;padding:12px;flex-wrap:wrap}
 button{background:#1c2538;border:1px solid #39435b;color:#e5e7eb;border-radius:6px;padding:7px 12px;cursor:pointer}
 button:hover,button:focus-visible{background:#374264;outline:2px solid #a855f7}
-.hint{color:#94a3b8;margin-left:auto}#scene{position:relative;height:535px}
+.hint{color:#94a3b8;margin-left:auto}#scene{position:relative;flex:1;min-height:160px}
 canvas{display:block;width:100%;height:100%;touch-action:none;cursor:grab;outline-offset:-3px}canvas:active{cursor:grabbing}
 #tooltip{display:none;position:absolute;pointer-events:none;background:#171e30;border:1px solid #596580;border-radius:8px;padding:10px;white-space:pre-line;max-width:290px;z-index:1}
 #legend{display:flex;gap:10px 20px;flex-wrap:wrap;padding:12px;color:#cbd5e1}.dot{width:9px;height:9px;display:inline-block;border-radius:50%;margin-right:6px}
-@media(max-width:600px){.hint{margin-left:0;width:100%}#scene{height:470px}}
+@media(max-width:600px){.hint{display:none}.toolbar{padding:8px}#legend{gap:6px 12px;padding:8px;font-size:11px}}
 </style>
 </head>
 <body>

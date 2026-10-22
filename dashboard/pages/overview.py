@@ -36,7 +36,7 @@ def layout():
                 [
                     kpi_card("Total Customers", data["row_count"], "#a855f7", "No duplicates detected" if data["duplicate_count"] == 0 else f"{data['duplicate_count']} duplicate IDs"),
                     kpi_card("Clusters", customers[cluster_col].nunique(), "#3b82f6", "K-Means groups"),
-                    kpi_card("Largest Segment", largest[segment_col], "#2dd4bf", f"{format_number(largest['customer_count'])} customers"),
+                    kpi_card("Largest Segment", str(largest[segment_col]).replace("_", " "), "#2dd4bf", f"{format_number(largest['customer_count'])} customers"),
                     kpi_card("Dormant At Risk", dormant_count, "#ef4444", "Retention focus"),
                     kpi_card("Silhouette Score", _silhouette(data), "#f59e0b", "Model evaluation"),
                 ],
